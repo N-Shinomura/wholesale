@@ -1,0 +1,32 @@
+# --- Private: personal purchase records (prices, amounts) - NEVER commit ---
+purchases.csv
+*.xlsx
+
+# --- Secrets ---
+.env
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+nul
+
+# --- Python ---
+__pycache__/
+*.pyc
+
+# --- Excel lock files ---
+~$*
+
+# --- LaTeX build artifacts ---
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.toc
+*.synctex.gz
+
+# Per-developer Claude Code settings
+.claude/settings.local.json
