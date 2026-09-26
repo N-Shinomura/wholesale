@@ -12,10 +12,11 @@ Independent of `fishery`; do not link the two unless asked.
   not saved.
 - `shops.csv` — one row per company (記号), 447 rows (public data, UTF-8
   with BOM): shop_code, shop_name (商号), name_plain (company without
-  (株)/(有)), kana, company, n_stalls, groups (業会 short), groups_full, url, tel.
+  (株)/(有)), kana, company, n_stalls, blocks (all its blocks, ` / `-joined),
+  groups (業会 short), groups_full, url, tel.
 - `stalls.csv` — one row per stall (店舗番号), 1,572 rows, sorted by block
   then stall: stall_no, block, map_row, map_col, then every `shops.csv`
-  column except n_stalls (company fields repeat across its stalls by design).
+  column except n_stalls and blocks (company fields repeat across its stalls by design).
 - `purchases.csv` — tracked in git. One row per purchase: date,
   buyer, shop_name, stall_no, shop_code, block, groups, item, origin, qty,
   unit, weight_kg, unit_price_yen, price_per (kg / 杯 / パック …),

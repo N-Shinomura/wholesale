@@ -5,7 +5,7 @@ The store-search page loads its list from a CSV named in
 association republishes, so the URL is read from the page each run.
 
 Output (repo root, UTF-8 with BOM so Excel opens them):
-  shops.csv   one row per company (記号): names, groups, url, tel
+  shops.csv   one row per company (記号): names, blocks, groups, url, tel
   stalls.csv  one row per stall (店舗番号), sorted by block then stall: block,
               position on the site's map, plus the company columns
 Text is NFKC-normalised (ﾛ117 -> ロ117).
@@ -63,19 +63,20 @@ def main():
     raw = fetch(csv_url)
 
     shop_header = ["shop_code", "shop_name", "name_plain", "kana", "company", "n_stalls",
-                   "groups", "groups_full", "url", "tel"]
-    # stalls repeat the company columns (except n_stalls) so each row reads on its own.
-    stall_header = ["stall_no", "block", "map_row", "map_col"] +         [h for h in shop_header if h != "n_stalls"]
+                   "blocks", "groups", "groups_full", "url", "tel"]
+    # stalls repeat the company columns (except n_stalls, blocks) so each row reads on its own.
+    stall_header = ["stall_no", "block", "map_row", "map_col"] +         [h for h in shop_header if h not in ("n_stalls", "blocks")]
     shops, stalls = [], []
     for code, name, kana, company, nos, grp, url, tel, blockmap in csv.reader(
             io.StringIO(raw.decode("utf-8-sig"))):
         glist = [g for g in grp.split("、") if g]
         pairs = [p.split("=") for p in blockmap.split("/") if "=" in p]
         shop = [code, nfkc(name), plain_name(company), kana, nfkc(company), len(pairs),
+                " / ".join(sorted({b for _, b in pairs})),
                 " / ".join(group_name(g) for g in glist), " / ".join(glist), url, tel]
         shops.append(shop)
         for stall, block in pairs:
-            stalls.append([nfkc(stall), block, *map_pos(block)] + shop[:5] + shop[6:])
+            stalls.append([nfkc(stall), block, *map_pos(block)] + shop[:5] + shop[7:])
     stalls.sort(key=lambda r: (r[1], r[0]))  # walk the floor block by block
 
     for path, header, rows in [(SHOPS, shop_header, shops), (STALLS, stall_header, stalls)]:
