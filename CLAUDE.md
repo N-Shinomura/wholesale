@@ -16,7 +16,7 @@ Independent of `fishery`; do not link the two unless asked.
 - `stalls.csv` — one row per stall (店舗番号), 1,572 rows, sorted by block
   then stall: stall_no, block, map_row, map_col, then every `shops.csv`
   column except n_stalls (company fields repeat across its stalls by design).
-- `purchases.csv` — **private, gitignored.** One row per purchase: date,
+- `purchases.csv` — tracked in git. One row per purchase: date,
   buyer, shop_name, stall_no, shop_code, block, groups, item, origin, qty,
   unit, weight_kg, unit_price_yen, price_per (kg / 杯 / パック …),
   amount_ex_tax, total_incl_tax (as paid), tax_yen, note. shop_code / block /
@@ -37,8 +37,7 @@ Independent of `fishery`; do not link the two unless asked.
 - Network: Norton TLS scanning breaks cert checks — the script uses an
   unverified SSL context (same as `curl -k`).
 
-**Data roots:** none on Google Drive yet. `purchases.csv` exists only on this
-machine — back it up manually (it is never pushed).
+**Data roots:** none; everything is in this repo.
 
 **Build:** no manuscript; no LaTeX. Run with `python scripts/build_shop_master.py`
 (standard library only). Close `shops.csv` / `stalls.csv` in Excel before running.
@@ -46,20 +45,17 @@ machine — back it up manually (it is never pushed).
 ## Audit flags
 
 ### goal
-Keep an accurate, private record of fish purchases linked to the current
+Keep an accurate record of fish purchases linked to the current
 Toyosu 仲卸 shop master.
 
 ### sub-goals
 - Shop master rebuildable from the live site in one command.
-- Purchases never leave this machine.
 
 ### required-patterns
-- `.gitignore` contains `purchases.csv`.
-- `git check-ignore purchases.csv` succeeds.
 - No `data/` or `private/` folders: xlsx/csv live at the repo root.
 
 ### forbidden-patterns
-- `purchases.csv` or any `*.xlsx` tracked by git.
+- Any `*.xlsx` tracked by git (data lives in CSV).
 - Hard-coded CSV upload URL (`HomepageUpload_*.csv`) in scripts — it must be
   read from the store page.
 
