@@ -23,6 +23,7 @@ from matplotlib.patches import Patch, Rectangle
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "block_map.png"
 LABEL_MIN = 6
+AS_OF = "2026.09.26"   # date stalls.csv was fetched from touoroshi.or.jp; update after a rebuild
 
 plt.rcParams["font.family"] = ["BIZ UDGothic", "Yu Gothic", "Meiryo"]  # UD face with a real bold weight
 plt.rcParams["hatch.linewidth"] = 0.7
@@ -129,7 +130,7 @@ def main():
     handles += [Patch(fc=OTHER[1], label=f"{OTHER[0]}（海老・無所属・北洋・合物・塩干・煉・淡水魚・佃和・伊勢海老）")]
     ax.legend(handles=handles, loc="upper left", bbox_to_anchor=(0, -0.045), ncol=4,
               frameon=False, fontsize=16.5, labelcolor=TEXT)
-    ax.set_title("豊洲 水産仲卸売場 店舗配置図", fontsize=16, color=TEXT,
+    ax.set_title(f"豊洲 水産仲卸売場 店舗配置図（{AS_OF}現在）", fontsize=16, color=TEXT,
                  fontweight="bold", loc="left", pad=30)
     ax.set_xlim(-3.5, slot_x(N_SLOTS) + SLOT_W + 0.5)
     ax.set_ylim(-3.6, top + 3.2)

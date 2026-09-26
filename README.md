@@ -1,6 +1,6 @@
 # wholesale
 
-![豊洲 水産仲卸売場 店舗配置図](block_map.png)
+![豊洲 水産仲卸売場 店舗配置図（2026.09.26現在）](block_map.png)
 
 Every 仲卸 stall at its real position on the floor (rows 1–8, イ・ロ・ハ・ニ from
 the bottom; block columns 1–9), coloured by 業会. Layout per Tokyo's
