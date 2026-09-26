@@ -8,5 +8,4 @@ built from https://www.touoroshi.or.jp/store/.
 python scripts/build_shop_master.py   # refresh shops.csv + stalls.csv from the site
 ```
 
-`purchases.csv` (your purchases) is gitignored — it is never
-committed or pushed.
+`purchases.csv` holds the purchase records.

@@ -1,0 +1,7 @@
+﻿date,buyer,shop_name,stall_no,shop_code,block,groups,item,origin,qty,unit,weight_kg,unit_price_yen,price_per,amount_ex_tax,total_incl_tax,tax_yen,note
+2026-09-23,natsuya,やまふ水産,,4991,0710 / 0809,大物業会 / 特種物業会,スルメイカ,,1,杯,,550,杯,550,594,44,
+2026-09-23,natsuya,やまふ水産,,4991,0710 / 0809,大物業会 / 特種物業会,ホッキ,,,,0.95,1300,kg,1235,1333,98,
+2026-09-23,natsuya,かね七水産,,1644,0606,特種物業会,アサリ,福島,,,0.83,2000,kg,1660,1792,132,
+2026-09-23,natsuya,吉善,,5113,0909 / 1009,特種物業会,鮎,,2,杯,,350,杯,700,756,56,"receipt total 1,404 for both 鮎 rows, split at 8%; date assumed 2026-09-23"
+2026-09-23,natsuya,吉善,,5113,0909 / 1009,特種物業会,鮎,,2,杯,,300,杯,600,648,48,"receipt total 1,404 for both 鮎 rows, split at 8%; date assumed 2026-09-23"
+2026-09-23,natsuya,ホクエイ食品,,4130,1009,大物業会,マグロ,,1,パック,,3000,パック,3000,3240,240,date assumed 2026-09-23

@@ -1,5 +1,4 @@
-# --- Private: personal purchase records (prices, amounts) - NEVER commit ---
-purchases.csv
+# --- Excel workbooks (data lives in CSV) ---
 *.xlsx
 
 # --- Secrets ---
