@@ -46,15 +46,21 @@ def group_name(g):
     return re.sub(r"（.*）$", "", g)
 
 
-def map_pos(block):
-    """Block code -> (map_row, map_col) as drawn on the site's store map.
+ROW_NAMES = ["1", "2", "3", "4", "5", "6", "7", "8", "イ", "ロ", "ハ", "ニ"]
 
-    Code = 2-digit row + 2-digit column, but the site draws code row 01 at the
-    BOTTOM (CSS .row01 top: 83%) and row 12 at the top, so map_row = 13 - row
-    (1 = top). The map has 9 columns; 0710 is the right part of a split cell in
-    column 9 (0709 is the left part), so column 10 maps to 9.
+
+def map_pos(stall_no, block):
+    """-> (row, map_col, slot): where the stall sits on the floor.
+
+    Per Tokyo's official plan (豊洲市場6街区水産仲卸店舗全体配置図) each row is one
+    line of stalls numbered left to right across the building (1001-1146, ...,
+    イ001-イ146, ...). Rows from the bottom: 1000s ... 8000s, then イ, ロ, ハ, ニ
+    (block-code rows 01-12; 山治 1001 in 0101 = bottom-left corner). The name
+    is the stall's own prefix: 1-8 or イロハニ.
+    map_col = block column (9 columns; 0710 is the right part of a split cell
+    in column 9, so 10 -> 9). slot = last three digits, 1 = leftmost ... 146.
     """
-    return 13 - int(block[:2]), min(int(block[2:]), 9)
+    return ROW_NAMES[int(block[:2]) - 1], min(int(block[2:]), 9), int(stall_no[-3:])
 
 
 def main():
@@ -65,7 +71,8 @@ def main():
     shop_header = ["shop_code", "shop_name", "name_plain", "kana", "company", "n_stalls",
                    "blocks", "groups", "groups_full", "url", "tel"]
     # stalls repeat the company columns (except n_stalls, blocks) so each row reads on its own.
-    stall_header = ["stall_no", "block", "map_row", "map_col"] +         [h for h in shop_header if h not in ("n_stalls", "blocks")]
+    stall_header = ["stall_no", "block", "row", "map_col", "slot"] + \
+        [h for h in shop_header if h not in ("n_stalls", "blocks")]
     shops, stalls = [], []
     for code, name, kana, company, nos, grp, url, tel, blockmap in csv.reader(
             io.StringIO(raw.decode("utf-8-sig"))):
@@ -76,7 +83,7 @@ def main():
                 " / ".join(group_name(g) for g in glist), " / ".join(glist), url, tel]
         shops.append(shop)
         for stall, block in pairs:
-            stalls.append([nfkc(stall), block, *map_pos(block)] + shop[:5] + shop[7:])
+            stalls.append([nfkc(stall), block, *map_pos(nfkc(stall), block)] + shop[:5] + shop[7:])
     stalls.sort(key=lambda r: (r[1], r[0]))  # walk the floor block by block
 
     for path, header, rows in [(SHOPS, shop_header, shops), (STALLS, stall_header, stalls)]:

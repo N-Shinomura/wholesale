@@ -15,8 +15,11 @@ Independent of `fishery`; do not link the two unless asked.
   (株)/(有)), kana, company, n_stalls, blocks (all its blocks, ` / `-joined),
   groups (業会 short), groups_full, url, tel.
 - `stalls.csv` — one row per stall (店舗番号), 1,572 rows, sorted by block
-  then stall: stall_no, block, map_row, map_col, then every `shops.csv`
-  column except n_stalls and blocks (company fields repeat across its stalls by design).
+  then stall: stall_no, block, row, map_col, slot, then every `shops.csv`
+  column except n_stalls and blocks (company fields repeat by design).
+- `scripts/plot_block_map.py` → `block_map.png` — floor map with every stall
+  at its real position, coloured by 業会 (3 hues + grey その他), shop names on
+  runs of ≥ 6 stalls.
 - `purchases.csv` — tracked in git. One row per purchase: date,
   buyer, shop_name, stall_no, shop_code, block, groups, item, origin, qty,
   unit, weight_kg, unit_price_yen, price_per (kg / 杯 / パック …),
@@ -25,13 +28,17 @@ Independent of `fishery`; do not link the two unless asked.
   far are 8% tax, fraction dropped.
 
 **Shop-master conventions**
-- Block code (site's own, e.g. `0802`) = 2-digit row + 2-digit column, but
-  the site's map draws code row 01 at the **bottom** and 12 at the top, in
-  9 columns. `0710` is the right part of a split cell in column 9 (`0709` is
-  the left part) — there is no 10th column. `map_row` (1 = top … 12 =
-  bottom) and `map_col` (1 = left … 9 = right) in `stalls.csv` give the drawn
-  position. All 101 blocks are clickable on the site's map (7 are narrow
-  half-cells: 0404, 0407, 0702, 0709, 0710, 1004, 1007).
+- Floor layout (Tokyo's official plan, 豊洲市場6街区水産仲卸売場棟・水産仲卸店舗
+  全体配置図, shijou.metro.tokyo.lg.jp): 12 rows, each ONE line of stalls
+  numbered left to right, slot 1–146 = last three digits of the stall
+  number. Rows from the bottom: 1, 2, … 8, イ, ロ, ハ, ニ (`row` = the
+  stall's own prefix; there is no 9000 row). Rows face each other back to
+  back in pairs (1|2, 3|4, 5|6, 7|8, イ|ロ, ハ|ニ). 山治 1001 (block 0101) is
+  the bottom-left corner.
+- Block code (site's own, e.g. `0802`) = 2-digit row (01–12, bottom-up) +
+  2-digit column. 9 block columns separated by 第1–第8通路 (slots 1–14,
+  15–30, …, 127–146); `0710` is the right part of a split block in column
+  9, so `map_col` maps 10 → 9.
 - Stall numbers are NFKC-normalised (site's half-width `ﾛ117` → `ロ117`).
 - One shop (記号) can have many stalls in different blocks and belong to
   several 業会.
